@@ -17,3 +17,7 @@ class BaseModel:
         """Return the str representation of BaseModel instance."""
         className = self.__class__.__name__
         return f"[{className}] ({self.id}) {self.__dict__}"
+    
+    def save(self):
+        """Update updated_at with the current datetime."""
+        self.updated_at = datetime.date()
