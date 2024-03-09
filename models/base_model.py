@@ -17,7 +17,21 @@ class BaseModel:
         """Return the str representation of BaseModel instance."""
         className = self.__class__.__name__
         return f"[{className}] ({self.id}) {self.__dict__}"
-    
+
     def save(self):
         """Update updated_at with the current datetime."""
         self.updated_at = datetime.date()
+
+    def to_dict(self):
+        """Return a dictionary of baseModel instance
+
+        Includes the key/value of dict of the instance
+        the class name of the object
+        created_at and updated_at in iso format.
+        """
+
+        d = self.__dict__.copy()
+        d["__class__"] = self.__class__
+        d["created_at"] = self.created_at.isoformat()
+        d["updated_at"] = self.updated_at.isoformat()
+        return d
