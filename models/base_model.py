@@ -4,19 +4,20 @@ import models
 from uuid import uuid4
 from datetime import datetime
 
+
 class BaseModel:
     """represent a class"""
 
     def __init__(self, *args, **kwargs):
-          """Initialize a class"""
-    if len(kwargs) != 0:
-        for key, value in kwargs.items():
-            if key == "class":
-                continue
-            if key == "created_at" or key == "updated_at":
-                value = datetime.fromisoformat(value)
-            setattr(self, key, value)
-        return
+        """Initialize a class"""
+        if len(kwargs) != 0:
+            for key, value in kwargs.items():
+                if key == "__class__":
+                    continue
+                if key == "created_at" or key == "updated_at":
+                    value = datetime.fromisoformat(value)
+                setattr(self, key, value)
+            return
         self.id = str(uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
@@ -28,7 +29,7 @@ class BaseModel:
 
     def save(self):
         """Update updated_at with the current datetime."""
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.today()
 
 
     def to_dict(self):
