@@ -4,6 +4,7 @@ import models
 from uuid import uuid4
 from datetime import datetime
 
+
 class BaseModel:
     """represent a class"""
 
@@ -28,7 +29,7 @@ class BaseModel:
 
     def save(self):
         """Update updated_at with the current datetime."""
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.today()
 
 
     def to_dict(self):
