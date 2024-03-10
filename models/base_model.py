@@ -7,8 +7,16 @@ from datetime import datetime
 class BaseModel:
     """represent a class"""
 
-    def __init__(self):
-        """Initialize a class"""
+    def __init__(self, *args, **kwargs):
+          """Initialize a class"""
+    if len(kwargs) != 0:
+        for key, value in kwargs.items():
+            if key == "class":
+                continue
+            if key == "created_at" or key == "updated_at":
+                value = datetime.fromisoformat(value)
+            setattr(self, key, value)
+        return
         self.id = str(uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
@@ -22,11 +30,6 @@ class BaseModel:
         """Update updated_at with the current datetime."""
         self.updated_at = datetime.now()
 
-    def __init__(self, *args, **kwargs):
-        """constructor"""
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
-        self.id = str(uuid4())
 
     def to_dict(self):
         """Return a dictionary of baseModel instance
