@@ -22,6 +22,12 @@ class BaseModel:
         """Update updated_at with the current datetime."""
         self.updated_at = datetime.now()
 
+    def __init__(self, *args, **kwargs):
+        """constructor"""
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
+        self.id = str(uuid4())
+
     def to_dict(self):
         """Return a dictionary of baseModel instance
 
