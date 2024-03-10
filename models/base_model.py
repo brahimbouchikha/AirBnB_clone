@@ -9,15 +9,15 @@ class BaseModel:
     """represent a class"""
 
     def __init__(self, *args, **kwargs):
-          """Initialize a class"""
-    if len(kwargs) != 0:
-        for key, value in kwargs.items():
-            if key == "class":
-                continue
-            if key == "created_at" or key == "updated_at":
-                value = datetime.fromisoformat(value)
-            setattr(self, key, value)
-        return
+        """Initialize a class"""
+        if len(kwargs) != 0:
+            for key, value in kwargs.items():
+                if key == "class":
+                    continue
+                if key == "created_at" or key == "updated_at":
+                    value = datetime.fromisoformat(value)
+                setattr(self, key, value)
+            return
         self.id = str(uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
