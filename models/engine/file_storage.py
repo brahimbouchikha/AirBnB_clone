@@ -14,7 +14,7 @@ class FileStorage:
         return FileStorage.__objects
 
     def new(self, obj):
-        k = "{}.{}".format(obj__class__.__name__, obj.id)
+        k = "{}.{}".format(obj.__class__.__name__, obj.id)
         FileStorage.__objects[k] = obj
 
 
