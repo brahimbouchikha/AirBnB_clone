@@ -42,7 +42,10 @@ class FileStorage:
 
         if not os.path.exists(FileStorage.__file_path):
             return
-        
+
         with open(FileStorage.__file_path, 'r') as f:
             data = json.load(f)
-            FileStorage.__objects = {k: BaseModel.to_dict(v) for k, v in data.items()}
+            FileStorage.__objects = {
+                k: BaseModel.to_dict(v)
+                for k, v in data.items()
+                }
