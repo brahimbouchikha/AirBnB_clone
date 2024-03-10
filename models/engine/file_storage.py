@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 """create a class"""
+import os
+import json
+from models.base_model import BaseModel
 
 
 class FileStorage:
