@@ -1,28 +1,23 @@
-# Import the cmd module
+"""Import the cmd module"""
 import cmd
 
-# Define a subclass of cmd.Cmd
+"""define a subclass of cmd.Cmd"""
 class HBNBCommand(cmd.Cmd):
-# Define the custom prompt
-prompt = "(hbnb) "
+    """define the custom prompt"""
+    prompt = "(hbnb) "
 
-# Define the do_quit method to exit the program
-def do_quit(self, arg):
-"""Quit command to exit the program"""
-return True
+    def do_quit(self, arg):
+        """quit command to exit programm"""
+        return True
 
-# Define the do_EOF method to exit the program
-def do_EOF(self, arg):
-"""EOF command to exit the program"""
-return True
+    def do_EOF(self, arg):
+        """EOFcommand to exit the program"""
+        return True
 
-# Define the emptyline method to do nothing
-def emptyline(self):
-"""An empty line + ENTER shouldn’t execute anything"""
-pass
+    def emptyline(self):
+        """an empty line + ENTER shouldn't do anything"""
+        pass
 
-# Check if the file is executed directly
-if __name__ == "__main__":
-# Create an instance of HBNBCommand and start the loop
-HBNBCommand().cmdloop()
-
+    if __name__ == "__main__":
+        """create an instance of HBNB command and start the loop"""
+        HBNBCommand().cmdloop()
