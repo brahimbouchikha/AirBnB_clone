@@ -12,15 +12,16 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """Instantiate a new model."""
+
+        time_form = "%Y-%m-%dT%H:%M:%S.%f"
         if kwargs:
             for key, value in kwargs.items():
                 if key == "__class__":
                     continue
-            if key == "created_at" or key == "updated_at":
-                try:
-                    setattr(self, key, datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
-                except ValueError:
-                    print(f"Invalid datetime format for {key}: {value}")
+                elif key == "created_at" or key == "updated_at":
+                        setattr(self, key, datetime.strptime(value.replace("'", ""), time_form))
+                else:
+                    setattr(self, key, value)
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
