@@ -1,42 +1,70 @@
 #!/usr/bin/python3
-
+"""
+base_model Module
+"""
 import uuid
 from datetime import datetime
 from typing import Dict
 
+
 class BaseModel:
     """A base class for all hbnb models"""
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args, **kwargs):
         """Instantiate a new model."""
-        if not kwargs:
+        if kwargs:
+            for key, value in kwargs.items():
+                if key == "__class__":
+                    continue
+            if key == "created_at" or key == "updated_at":
+                try:
+                    setattr(self, key, datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
+                except ValueError:
+                    print(f"Invalid datetime format for {key}: {value}")
+        else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-        else:
-            try:
-                kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'], '%Y-%m-%dT%H:%M:%S.%f')
-                kwargs['created_at'] = datetime.strptime(kwargs['created_at'], '%Y-%m-%dT%H:%M:%S.%f')
-            except KeyError as e:
-                raise ValueError(f"Missing required attribute: {e}")
-            except ValueError:
-                raise ValueError("Invalid datetime format provided")
-            self.__dict__.update(kwargs)
 
-    def __str__(self) -> str:
+    def __str__(self):
+        """
+        Return a string representation of the object.
+        """
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
-    def save(self) -> None:
-        """Save the current state of the object."""
+    def save(self):
+        """Update updated_at with the current datetime."""
         self.updated_at = datetime.now()
-        # Call method to save to storage
 
-    def to_dict(self) -> Dict[str, str]:
+    def to_dict(self):
         """Convert instance into dict format."""
-        return {
-            **self.__dict__,
-            "__class__": self.__class__.__name__,
-            "created_at": self.created_at.isoformat(),
-            "updated_at": self.updated_at.isoformat()
-        }
+        ins_dict = self.__dict__.copy()
+        ins_dict["__class__"] = self.__class__.__name__
+        ins_dict["created_at"] = self.created_at.isoformat()
+        ins_dict["updated_at"] = self.updated_at.isoformat()
+        return ins_dict
 
+
+if __name__ == "__main__":
+
+    my_model = BaseModel()
+    my_model.name = "My_First_Model"
+    my_model.my_number = 89
+    print(my_model.id)
+    print(my_model)
+    print(type(my_model.created_at))
+    print("--")
+    my_model_json = my_model.to_dict()
+    print(my_model_json)
+    print("JSON of my_model:")
+    for key in my_model_json.keys():
+        print("\t{}: ({}) - {}".format(key, type(my_model_json[key]), my_model_json[key]))
+
+    print("--")
+    my_new_model = BaseModel(**my_model_json)
+    print(my_new_model.id)
+    print(my_new_model)
+    print(type(my_new_model.created_at))
+
+    print("--")
+    print(my_model is my_new_model)
