@@ -4,7 +4,6 @@ base_model Module
 """
 import uuid
 from datetime import datetime
-from typing import Dict
 
 
 class BaseModel:
