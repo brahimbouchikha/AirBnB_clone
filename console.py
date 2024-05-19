@@ -22,20 +22,28 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
 
     def do_quit(self, command):
-        """ Method to exit the HBNB console"""
+        """
+        Method to exit the HBNB console.
+        """
         return True
 
     def help_quit(self):
-        """ Prints the help documentation for quit  """
+        """
+        Prints the help documentation for quit.
+        """
         print("Exits the program with formatting\n")
 
     def do_EOF(self, arg):
-        """ Handles EOF to exit program """
+        """
+        Handles EOF to exit program.
+        """
         print()
         return True
 
     def help_EOF(self):
-        """ Prints the help documentation for EOF """
+        """
+        Prints the help documentation for EOF.
+        """
         print("Exits the program without formatting\n")
 
 
