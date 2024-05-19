@@ -49,8 +49,13 @@ class HBNBCommand(cmd.Cmd):
         print("Exits the program without formatting\n")
 
     def do_create(self, args):
-        """Create an object of any class"""
-        if not args:
+        """
+        Create an object of any class.
+        Example:
+            create <class_name>
+        """
+
+        if len(args) == 0:
             print("** class name missing **")
             return
         elif args not in self.classes:
@@ -61,8 +66,55 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
         print(new_instance.id)
 
+    def do_show(self, args):
+        """
+        Showing the string represent an instance of class.
+        Example:
+            show <class_name> <id>
+        """
+        args_list = args.split()
 
+        if len(args) == 0:
+            print("** class name missing **")
+            return
 
+        class_name = args_list[0]
+        if class_name not in self.classes:
+            print("** class doesn't exist **")
+            return
 
+        if len(args_list) < 2:
+            print("** instance id missing **")
+            return
+
+        obj_id = args_list[1]
+        key = f"{class_name}.{obj_id}"
+
+        if key in storage.all():
+            print(storage.all()[key])
+        else:
+            print("** Instance id not found **")
+
+    def do_destroy(self, args):
+        """
+        Delete an instance based on the class name and ID if instance.
+        Example:
+            destroy <class_name> <id>
+        """
+
+        args_list = args.split()
+        if len(args_list) == 0:
+            print("** Class name missing **")
+        elif len(args_list < 2):
+            print("instance id missing")
+        else:
+            class_name = args_list[0]
+            obj_id = args_list[1]
+            key = f"{class_name}.{obj_id}"
+            if key in storage.all():
+                del storage.all[key]
+                storage.save()
+            else:
+                print ("*** no instance found ***")
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
