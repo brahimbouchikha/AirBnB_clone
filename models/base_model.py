@@ -19,8 +19,10 @@ class BaseModel:
                 if key == "__class__":
                     continue
                 elif key == "created_at" or key == "updated_at":
-                    value = value.replace("'", "")
-                    setattr(self, key, datetime.strptime(value, time_form))
+                    try:
+                        setattr(self, key, datetime.strptime(value, time_form))
+                    except ValueError:
+                        print(f"Invalid datetime format for {key}: {value}")
                 else:
                     setattr(self, key, value)
         else:
