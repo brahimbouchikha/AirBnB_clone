@@ -22,7 +22,7 @@ class HBNBCommand(cmd.Cmd):
     classes = {
         'BaseModel': BaseModel,
     }
-    
+
     def do_quit(self, args):
         """
         Method to exit the HBNB console.
@@ -115,14 +115,13 @@ class HBNBCommand(cmd.Cmd):
                 del storage.all[key]
                 storage.save()
             else:
-                print ("*** no instance found ***")
-
+                print("*** no instance found ***")
 
     def do_all(self, args):
         """
         Print the string representation of all instances
         or a specific class.
-        
+
         Example:
             all [class_name]
         """
@@ -134,11 +133,9 @@ class HBNBCommand(cmd.Cmd):
         elif args_list[0] not in self.classes:
             print("*** class doesn't exist***")
         else:
-            for key,value in storage.all().items():
+            for key, value in storage.all().items():
                 if key.split('.')[0] == args_list[0]:
                     print(str(value))
-
-
 
 
 if __name__ == "__main__":
