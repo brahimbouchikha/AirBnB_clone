@@ -31,7 +31,7 @@ class HBNBCommand(cmd.Cmd):
         """
         Prints the help documentation for quit.
         """
-        print("Exits the program with formatting\n")
+        print("Quit command to exit the program\n")
 
     def do_EOF(self, arg):
         """
