@@ -54,16 +54,16 @@ class HBNBCommand(cmd.Cmd):
         Example:
             create <class_name>
         """
-
+        args = args.split()
         if len(args) == 0:
             print("** class name missing **")
             return
-        elif args not in self.classes:
+        elif args[0] not in self.classes:
             print("** class doesn't exist **")
             return
 
-        new_instance = self.classes[args]()
-        storage.save()
+        new_instance = BaseModel()
+        new_instance.save()
         print(new_instance.id)
 
     def do_show(self, args):
@@ -93,7 +93,7 @@ class HBNBCommand(cmd.Cmd):
         if key in storage.all():
             print(storage.all()[key])
         else:
-            print("** Instance id not found **")
+            print("** no instance found **")
 
     def do_destroy(self, args):
         """
@@ -104,9 +104,11 @@ class HBNBCommand(cmd.Cmd):
 
         args_list = args.split()
         if len(args_list) == 0:
-            print("** Class name missing **")
+            print("** class name missing **")
+        elif args_list[0] not in self.classes:
+            print("** class doesn't exist **")
         elif len(args_list < 2):
-            print("instance id missing")
+            print("** instance id missing **")
         else:
             class_name = args_list[0]
             obj_id = args_list[1]
@@ -115,7 +117,7 @@ class HBNBCommand(cmd.Cmd):
                 del storage.all[key]
                 storage.save()
             else:
-                print("*** no instance found ***")
+                print("** no instance found **")
 
     def do_all(self, args):
         """
@@ -136,6 +138,38 @@ class HBNBCommand(cmd.Cmd):
             for key, value in storage.all().items():
                 if key.split('.')[0] == args_list[0]:
                     print(str(value))
+
+    def do_update(self, args):
+        """
+        update an instance by adding or upating attribute
+        example:
+        update <class_name> <id> <attributeName> <value>
+        """
+        args = args.split()
+        if len(args) == 0:
+            print("** class name missing **")
+        elif args[0] not in self.classes:
+            print("** class doesn't exist **")
+        elif len(args) == 1:
+            print("** instance id missing **")
+        else:
+            key = f"{args[0]}.{args[1]}"
+            if key not in storage.all():
+                print("** no instance found **")
+            elif len(args) < 3:
+                print("** attribute name missing **")
+            elif len(args) < 4:
+                print("** value missing **")
+            else:
+                obj = storage.all()[key]
+                AttrName = args[2]
+                AttrValue = args[3]
+                try:
+                    AttrValue = eval(AttrValue)
+                except Exception:
+                    pass
+                setattr(obj, AttrName, AttrValue)
+                obj.save()
 
 
 if __name__ == "__main__":
