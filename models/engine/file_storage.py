@@ -5,7 +5,7 @@ file_storage Module
 
 import json
 import os
-from models.base_model import BaseModel
+
 
 class FileStorage:
     """Class for serializing and deserializing objects to/from JSON file."""
@@ -36,6 +36,7 @@ class FileStorage:
             json.dump(object_dict, f)
 
     def reload(self):
+        from models.base_model import BaseModel
         """
         Deserialize JSON file to __objects if it exists.
         do nothing if it doesn't.
