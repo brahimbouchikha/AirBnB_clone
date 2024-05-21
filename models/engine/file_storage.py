@@ -36,19 +36,23 @@ class FileStorage:
             json.dump(object_dict, f)
 
     def reload(self):
-        from models.base_model import BaseModel
         """
         Deserialize JSON file to __objects if it exists.
         do nothing if it doesn't.
         """
+        from models.base_model import BaseModel
+        classes = {
+            'BaseModel': BaseModel,
+        }
         if os.path.isfile(FileStorage.__file_path):
             with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
                 try:
                     object_dict = json.load(f)
                     for key, value in object_dict.items():
                         class_name, object_id = key.split('.')
-                        class_cls = eval(class_name)
-                        instance_cls = class_cls(**value)
-                        FileStorage.__objects[key] = instance_cls
+                        class_cls = classes.get(class_name)
+                        if class_cls:
+                            instance_cls = class_cls(**value)
+                            FileStorage.__objects[key] = instance_cls
                 except Exception:
                     pass
