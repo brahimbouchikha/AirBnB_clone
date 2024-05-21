@@ -22,6 +22,11 @@ class HBNBCommand(cmd.Cmd):
     classes = {
         'BaseModel': BaseModel,
     }
+    def emptyline(self):
+        """
+        An empty line is entered. This method will do nothing.
+        """
+        pass
 
     def do_quit(self, args):
         """
