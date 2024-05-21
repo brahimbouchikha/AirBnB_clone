@@ -4,7 +4,6 @@ file_storage Module
 """
 
 import json
-from models.base_model import BaseModel
 import os
 
 
@@ -23,7 +22,7 @@ class FileStorage:
         """
         returns the storage dictionary.
         """
-        return self.__class__.__objects
+        return FileStorage.__objects
 
     def save(self):
         """
@@ -37,6 +36,7 @@ class FileStorage:
             json.dump(object_dict, f)
 
     def reload(self):
+        from models.base_model import BaseModel
         """
         Deserialize JSON file to __objects if it exists.
         do nothing if it doesn't.
@@ -52,5 +52,3 @@ class FileStorage:
                         FileStorage.__objects[key] = instance_cls
                 except Exception:
                     pass
-
-
